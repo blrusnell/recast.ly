@@ -2,10 +2,24 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
+import searchYouTube from '../lib/searchYouTube.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.initializeVideos = this.initializeVideos.bind(this);
+    
+    this.options = {
+      q: 'dogs',
+      maxResults: 5,
+      key: YOUTUBE_API_KEY,
+      videoEmbeddable: true,
+      part: 'snippet',
+      type: 'video',
+
+    }
+    
 
     this.state = {
       videos: exampleVideoData,
@@ -13,8 +27,15 @@ class App extends React.Component {
     }
   }
 
+  initializeVideos(data) {
+    console.log(data.items);
+    this.setState({
+      videos: data.items,
+      currentVideo: data.items[0],
+    });
+  }
+
   onVideoListClick (vid) {
-    console.log(vid);
     this.setState({
       currentVideo: vid
     });
@@ -39,13 +60,16 @@ class App extends React.Component {
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentVideo} />
         </div>
-        
+
         <div className="col-md-5" >
           <VideoList {...newVidProps} />
         </div>
       </div>
     </div>
     );
+  }
+  componentDidMount() {
+    searchYouTube(this.options, this.initializeVideos);
   }
 }
 
