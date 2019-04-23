@@ -39,6 +39,7 @@ class App extends React.Component {
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentVideo} />
         </div>
+        
         <div className="col-md-5" >
           <VideoList {...newVidProps} />
         </div>
