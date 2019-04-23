@@ -13,17 +13,21 @@ class App extends React.Component {
     }
   }
 
-  onVideoListClick(e) {
-    console.log(e.target);
-    // this.setState({
-    //   currentVideo: 
-    // });
+  onVideoListClick (vid) {
+    console.log(vid);
+    this.setState({
+      currentVideo: vid
+    });
   }
 
   
 
   render() {
- 
+    let newVidProps = {
+      click: this.onVideoListClick.bind(this),
+      videos: this.state.videos
+    }
+
     return (
       <div>
       <nav className="navbar">
@@ -35,8 +39,8 @@ class App extends React.Component {
         <div className="col-md-7">
           <VideoPlayer video={this.state.currentVideo} />
         </div>
-        <div className="col-md-5" onClick={this.onVideoListClick.bind(this)}>
-          <VideoList videos={this.state.videos} />
+        <div className="col-md-5" >
+          <VideoList {...newVidProps} />
         </div>
       </div>
     </div>
