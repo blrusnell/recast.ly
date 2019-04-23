@@ -6,7 +6,20 @@ import VideoPlayer from './VideoPlayer.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      videos: exampleVideoData,
+      currentVideo: exampleVideoData[0]
+    }
   }
+
+  onVideoListClick(e) {
+    console.log(e.target);
+    // this.setState({
+    //   currentVideo: 
+    // });
+  }
+
   
 
   render() {
@@ -20,10 +33,10 @@ class App extends React.Component {
       </nav>
       <div className="row">
         <div className="col-md-7">
-          <VideoPlayer video={exampleVideoData[0]} />
+          <VideoPlayer video={this.state.currentVideo} />
         </div>
-        <div className="col-md-5">
-          <VideoList videos={exampleVideoData} />
+        <div className="col-md-5" onClick={this.onVideoListClick.bind(this)}>
+          <VideoList videos={this.state.videos} />
         </div>
       </div>
     </div>
